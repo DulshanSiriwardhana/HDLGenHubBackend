@@ -1,6 +1,29 @@
 const express = require('express');
 const router = express.Router();
 const Admin = require('../models/Admin');
+const multer = require('multer');
+const upload = require('../middleware/upload'); // Import the Multer configuration
+
+router.post('/:id/update', upload.single('photo'), async (req, res) => {
+    try {
+        const admin = await Admin.findById(req.params.id);
+        if (!admin) return res.status(404).send('Admin not found');
+
+        admin.town = req.body.town || admin.town;
+        admin.age = req.body.age || admin.age;
+        admin.about= req.body.about||admin.about;
+
+        if (req.file) {
+            admin.photoUrl = `/uploads/${req.file.filename}`;
+        }
+
+        await admin.save();
+
+        res.send(admin); // Send back the updated admin data
+    } catch (err) {
+        res.status(500).send('Server error');
+    }
+});
 
 router.get('/', async(req, res)=>{
     console.log(req);
