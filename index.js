@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 require('dotenv').config();
 const app = express();
+
 app.use(cors({
     origin: ["http://localhost:3000",
             "http://localhost:3001",
@@ -63,6 +64,8 @@ app.use('/Code', CodeRouter);
 
 const AttemptedQuizRouter = require('./routes/AttemptedQuiz');
 app.use('/AttemptedQuiz', AttemptedQuizRouter);
+
+app.use('/uploads', express.static('uploads'));
 
 const PORT = process.env.PORT || 4000;
 

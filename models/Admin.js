@@ -11,6 +11,11 @@ const AdminSchema = new Schema(
             type: String,
             require: true
         },
+        role: {
+            type: String,
+            required: true,
+            default: 'admin',
+        },
         key: {
             type: String,
             require: true,
@@ -28,7 +33,11 @@ const AdminSchema = new Schema(
         password: {
             type: String,
             require: true
-        }
+        },
+        joined: { type: Date, default: Date.now },
+        town: { type: String },
+        age: { type: Number },
+        photoUrl: { type: String } 
     }
 )
 
